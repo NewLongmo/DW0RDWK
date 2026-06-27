@@ -524,8 +524,8 @@ onMounted(() => {
 .work-panel,
 .result-panel {
   min-height: 440px;
-  border-radius: 8px;
-  box-shadow: 0 1px 2px rgb(15 23 42 / 6%);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
 }
 
 .submit-toolbar,
@@ -574,7 +574,7 @@ onMounted(() => {
 }
 
 .muted {
-  color: #667085;
+  color: var(--color-text-secondary);
 }
 
 .empty-result {
@@ -595,14 +595,15 @@ onMounted(() => {
   gap: 8px;
   align-items: center;
   padding: 10px 12px;
-  border: 1px solid #edf0f3;
-  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
   cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .course-result-row:hover {
-  border-color: #91caff;
-  background: #f5f9ff;
+  border-color: var(--color-brand);
+  background: var(--color-brand-soft);
 }
 
 .course-result-name {
@@ -612,7 +613,7 @@ onMounted(() => {
 }
 
 code {
-  color: #667085;
+  color: var(--color-text-secondary);
   font-size: 12px;
 }
 
@@ -640,7 +641,7 @@ code {
   justify-content: space-between;
   gap: 12px;
   padding: 8px 0;
-  border-bottom: 1px solid #edf0f3;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .rank-grid span {

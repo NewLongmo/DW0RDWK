@@ -267,7 +267,7 @@ onMounted(load);
 
 .route-text {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  color: #475467;
+  color: var(--color-text-secondary);
 }
 
 .sort-input {

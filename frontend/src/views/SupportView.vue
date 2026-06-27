@@ -316,7 +316,7 @@ function formatDate(value: string) {
 }
 
 .event-row span {
-  color: #667085;
+  color: var(--color-text-secondary);
   font-size: 12px;
 }
 
@@ -325,7 +325,7 @@ function formatDate(value: string) {
 }
 
 .event-row code {
-  color: #475467;
+  color: var(--color-text-secondary);
   white-space: pre-wrap;
 }
 </style>

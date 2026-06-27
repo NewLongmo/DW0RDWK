@@ -5,25 +5,59 @@
         <span class="brand__mark">G</span>
         <span v-if="!app.collapsed" class="brand__text">代理中心</span>
       </div>
-      <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline" :items="items" @click="go" />
+      <a-menu
+        v-model:selectedKeys="selectedKeys"
+        :theme="app.theme === 'dark' ? 'dark' : 'light'"
+        mode="inline"
+        :items="items"
+        @click="go"
+      />
     </a-layout-sider>
 
     <a-layout>
       <a-layout-header class="admin-header">
-        <a-button type="text" class="icon-button" @click="app.toggleCollapsed">
-          <MenuFoldOutlined v-if="!app.collapsed" />
-          <MenuUnfoldOutlined v-else />
-        </a-button>
-        <div class="admin-header__meta">
-          <span>{{ app.account || profile.account || 'agent' }}</span>
-          <span>余额：{{ profile.balance.toFixed(2) }}</span>
-          <span>倍率：{{ profile.priceRate }}</span>
-          <a-button size="small" @click="signOut">退出登录</a-button>
+        <div class="admin-header__left">
+          <a-button type="text" class="icon-button" @click="app.toggleCollapsed">
+            <MenuFoldOutlined v-if="!app.collapsed" />
+            <MenuUnfoldOutlined v-else />
+          </a-button>
+        </div>
+        <div class="admin-header__right">
+          <a-segmented :value="app.density" :options="densityOptions" @change="onDensity" />
+          <a-tooltip :title="app.theme === 'dark' ? '切换浅色' : '切换深色'">
+            <a-button type="text" class="icon-button" @click="app.toggleTheme">
+              <BulbFilled v-if="app.theme === 'light'" />
+              <BulbOutlined v-else />
+            </a-button>
+          </a-tooltip>
+          <a-tag :bordered="false" color="blue">余额 {{ profile.balance.toFixed(2) }}</a-tag>
+          <a-dropdown placement="bottomRight">
+            <div class="header-user">
+              <a-avatar :size="32" :style="{ background: 'var(--color-brand)' }">{{ avatarChar }}</a-avatar>
+              <div>
+                <div class="header-user__name">{{ app.account || profile.account || 'agent' }}</div>
+                <div class="header-user__role">倍率 {{ profile.priceRate }}</div>
+              </div>
+            </div>
+            <template #overlay>
+              <a-menu>
+                <a-menu-item key="meta" disabled>
+                  余额 {{ profile.balance.toFixed(2) }} · 倍率 {{ profile.priceRate }}
+                </a-menu-item>
+                <a-menu-divider />
+                <a-menu-item key="logout" @click="signOut">退出登录</a-menu-item>
+              </a-menu>
+            </template>
+          </a-dropdown>
         </div>
       </a-layout-header>
 
       <a-layout-content class="admin-content">
-        <RouterView @changed="loadProfile" />
+        <router-view v-slot="{ Component }">
+          <transition name="fade" mode="out-in">
+            <component :is="Component" @changed="loadProfile" />
+          </transition>
+        </router-view>
       </a-layout-content>
     </a-layout>
   </a-layout>
@@ -35,6 +69,8 @@ import { useRoute, useRouter } from 'vue-router';
 import { message } from 'ant-design-vue';
 import {
   AppstoreOutlined,
+  BulbFilled,
+  BulbOutlined,
   CreditCardOutlined,
   PlusOutlined,
   MenuFoldOutlined,
@@ -57,6 +93,13 @@ const profile = reactive({
   balance: 0,
   priceRate: 1,
 });
+const densityOptions = [
+  { label: '标准', value: 'default' },
+  { label: '紧凑', value: 'compact' },
+];
+const avatarChar = computed(() =>
+  (app.account || profile.account || 'A').charAt(0).toUpperCase(),
+);
 
 const items = [
   { key: '/user/dashboard', icon: () => h(AppstoreOutlined), label: '代理概览' },
@@ -70,6 +113,10 @@ const items = [
 
 function go(event: { key: string }) {
   router.push(event.key);
+}
+
+function onDensity(value: string | number) {
+  app.setDensity(value === 'compact' ? 'compact' : 'default');
 }
 
 async function signOut() {

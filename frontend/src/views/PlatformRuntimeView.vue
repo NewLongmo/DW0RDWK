@@ -817,12 +817,12 @@ onMounted(() => {
 }
 
 .muted {
-  color: #667085;
+  color: var(--color-text-secondary);
   font-size: 12px;
 }
 
 .danger {
-  color: #cf1322;
+  color: var(--color-danger);
 }
 
 code {

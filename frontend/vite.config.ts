@@ -39,6 +39,9 @@ export default defineConfig(({ mode }) => {
             if (normalizedId.includes('/axios/')) {
               return 'http';
             }
+            if (normalizedId.includes('/three/')) {
+              return 'three';
+            }
             if (normalizedId.includes('@ant-design/icons-vue')) {
               return 'antd-icons';
             }

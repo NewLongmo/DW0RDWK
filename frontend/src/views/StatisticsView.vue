@@ -173,11 +173,11 @@ const TrendChart = defineComponent({
       }).join(' ');
       return h('div', { class: 'trend-chart' }, [
         h('svg', { viewBox: `0 0 ${width} ${height}`, preserveAspectRatio: 'none' }, [
-          h('polyline', { points, fill: 'none', stroke: '#1677ff', 'stroke-width': 3 }),
+          h('polyline', { points, fill: 'none', stroke: 'var(--color-brand)', 'stroke-width': 3 }),
           ...values.map((value, index) => {
             const x = rows.length <= 1 ? 0 : (index / (rows.length - 1)) * width;
             const y = height - (value / max) * (height - 24) - 12;
-            return h('circle', { cx: x, cy: y, r: 4, fill: '#1677ff' });
+            return h('circle', { cx: x, cy: y, r: 4, fill: 'var(--color-brand)' });
           }),
         ]),
         h('div', { class: 'trend-labels' }, rows.map((row) => h('span', { key: row.date }, row.date))),
@@ -213,7 +213,7 @@ onMounted(load);
 <style scoped>
 .chart-card {
   margin-top: 12px;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
 }
 
 .trend-chart {
@@ -224,7 +224,7 @@ onMounted(load);
 .trend-chart svg {
   width: 100%;
   height: 260px;
-  border-bottom: 1px solid #edf0f3;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .trend-labels {
@@ -232,7 +232,7 @@ onMounted(load);
   justify-content: space-between;
   gap: 4px;
   margin-top: 8px;
-  color: #667085;
+  color: var(--color-text-secondary);
   font-size: 12px;
 }
 
@@ -250,8 +250,8 @@ onMounted(load);
   gap: 10px;
   align-items: center;
   padding: 8px 10px;
-  border: 1px solid #edf0f3;
-  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
 }
 
 .rank-index {
@@ -261,8 +261,8 @@ onMounted(load);
   width: 22px;
   height: 22px;
   border-radius: 6px;
-  background: #e6f4ff;
-  color: #1677ff;
+  background: var(--color-brand-soft);
+  color: var(--color-brand);
   font-weight: 700;
 }
 
@@ -273,7 +273,7 @@ onMounted(load);
 }
 
 .rank-list em {
-  color: #1677ff;
+  color: var(--color-brand);
   font-style: normal;
   font-weight: 700;
 }
@@ -282,6 +282,6 @@ onMounted(load);
   display: grid;
   min-height: 180px;
   place-items: center;
-  color: #667085;
+  color: var(--color-text-secondary);
 }
 </style>

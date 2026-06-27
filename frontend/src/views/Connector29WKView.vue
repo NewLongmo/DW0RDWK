@@ -368,13 +368,13 @@ onMounted(() => {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: #1677ff;
+  background: var(--color-brand);
   color: #fff;
   font-weight: 700;
 }
 
 .step-mark--green {
-  background: #16a34a;
+  background: var(--color-success);
 }
 
 .wk29-form-grid {
@@ -407,7 +407,7 @@ onMounted(() => {
 
 .strategy-cell__text,
 .wk29-description {
-  color: #667085;
+  color: var(--color-text-secondary);
 }
 
 .wk29-description {

@@ -1,9 +1,23 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="light" data-density="default">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DW0RDWK Admin</title>
+    <meta name="theme-color" content="#1677ff" />
+    <title>DW0RDWK 管理台</title>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('dw0rdwk_theme') === 'dark' ? 'dark' : 'light';
+          var d = localStorage.getItem('dw0rdwk_density') === 'compact' ? 'compact' : 'default';
+          var el = document.documentElement;
+          el.dataset.theme = t;
+          el.dataset.density = d;
+          el.style.background = t === 'dark' ? '#0e1014' : '#f5f7fa';
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="app"></div>

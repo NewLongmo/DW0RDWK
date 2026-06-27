@@ -1,11 +1,17 @@
 <template>
-  <section class="page">
-    <div class="page-heading">
-      <div>
+  <section class="page user-dashboard-page">
+    <div class="agent-hero">
+      <FluidHeroScene variant="panel" />
+      <div class="agent-hero__content">
+        <p class="home-kicker">Agent Workspace</p>
         <h1>代理概览</h1>
-        <p>查看余额、订单和直属代理概况。</p>
+        <p>查看余额、订单、公告和直属代理概况。</p>
       </div>
-      <a-button @click="load" :loading="loading">刷新</a-button>
+      <div class="agent-hero__balance">
+        <span>账户余额</span>
+        <strong>¥{{ Number(stats.balance).toFixed(2) }}</strong>
+        <a-button @click="load" :loading="loading">刷新</a-button>
+      </div>
     </div>
 
     <a-row :gutter="[12, 12]">
@@ -39,8 +45,8 @@
     <a-card :bordered="false" class="trend-card" title="近7日订单趋势">
       <div class="mini-chart">
         <svg viewBox="0 0 700 220" preserveAspectRatio="none">
-          <polyline :points="trendPoints" fill="none" stroke="#1677ff" stroke-width="3" />
-          <circle v-for="point in trendCircles" :key="point.key" :cx="point.x" :cy="point.y" r="4" fill="#1677ff" />
+          <polyline :points="trendPoints" fill="none" stroke="var(--color-brand)" stroke-width="3" />
+          <circle v-for="point in trendCircles" :key="point.key" :cx="point.x" :cy="point.y" r="4" fill="var(--color-brand)" />
         </svg>
         <div class="trend-labels">
           <span v-for="item in stats.trend7" :key="item.date">{{ item.date }}</span>
@@ -54,6 +60,7 @@
 import { computed, onMounted, ref } from 'vue';
 import { message, Modal } from 'ant-design-vue';
 import { fetchAgentDashboard, type AgentDashboard } from '@/api/user';
+import FluidHeroScene from '@/components/FluidHeroScene.vue';
 
 const loading = ref(false);
 const popupShown = ref(false);
@@ -128,30 +135,96 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.user-dashboard-page {
+  display: grid;
+  gap: 16px;
+}
+
+.agent-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: end;
+  min-height: 230px;
+  overflow: hidden;
+  padding: 28px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(135deg, var(--color-bg-elevated), color-mix(in srgb, var(--color-success) 10%, var(--color-bg-elevated))),
+    var(--color-bg-elevated);
+  box-shadow: var(--shadow-card);
+}
+
+.agent-hero__content,
+.agent-hero__balance {
+  position: relative;
+  z-index: 1;
+}
+
+.agent-hero h1 {
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.15;
+}
+
+.agent-hero p {
+  margin: 8px 0 0;
+  color: var(--color-text-secondary);
+}
+
+.agent-hero__balance {
+  display: grid;
+  gap: 8px;
+  justify-items: end;
+  min-width: 190px;
+}
+
+.agent-hero__balance span {
+  color: var(--color-text-secondary);
+  font-size: 12px;
+}
+
+.agent-hero__balance strong {
+  font-size: 32px;
+  line-height: 1;
+}
+
 .metric-extra {
   margin-top: 14px;
   padding-top: 12px;
-  border-top: 1px solid #edf0f3;
-  color: #667085;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
   font-size: 13px;
 }
 
 .trend-card {
   margin-top: 16px;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
 }
 
 .mini-chart svg {
   width: 100%;
   height: 220px;
-  border-bottom: 1px solid #edf0f3;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .trend-labels {
   display: flex;
   justify-content: space-between;
   margin-top: 8px;
-  color: #667085;
+  color: var(--color-text-secondary);
   font-size: 12px;
+}
+
+@media (max-width: 920px) {
+  .agent-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .agent-hero__balance {
+    justify-items: start;
+  }
 }
 </style>

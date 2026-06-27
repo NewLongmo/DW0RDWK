@@ -1,11 +1,12 @@
 <template>
-  <main class="login-page">
-    <section class="login-panel">
+  <main class="login-page auth-stage">
+    <FluidHeroScene variant="public" />
+    <section class="login-panel auth-panel auth-panel--glass">
       <div class="login-brand">
-        <span class="brand__mark">G</span>
+        <span class="brand__mark">D</span>
         <div>
           <h1>DW0RDWK 管理台</h1>
-          <p>登录后继续管理订单与代理。</p>
+          <p>演示站已关闭真实下单与上游同步。</p>
         </div>
       </div>
 
@@ -27,6 +28,10 @@
         已经下单？
         <RouterLink to="/support">自助查单补单</RouterLink>
       </div>
+      <div class="auth-switch">
+        先看看项目？
+        <RouterLink to="/">返回展示首页</RouterLink>
+      </div>
     </section>
   </main>
 </template>
@@ -36,6 +41,7 @@ import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { message } from 'ant-design-vue';
 import { login } from '@/api/admin';
+import FluidHeroScene from '@/components/FluidHeroScene.vue';
 import { useAppStore } from '@/stores/app';
 
 const router = useRouter();

@@ -4,6 +4,7 @@ import { getAuthToken } from '@/api/http';
 export const router = createRouter({
   history: createWebHistory(),
   routes: [
+    { path: '/', component: () => import('@/views/HomeView.vue') },
     { path: '/login', component: () => import('@/views/LoginView.vue') },
     { path: '/register', component: () => import('@/views/RegisterView.vue') },
     { path: '/support', component: () => import('@/views/SupportView.vue') },
@@ -52,7 +53,7 @@ export const router = createRouter({
   ],
 });
 
-const publicPaths = new Set(['/login', '/register', '/support']);
+const publicPaths = new Set(['/', '/login', '/register', '/support']);
 const guestOnlyPaths = new Set(['/login', '/register']);
 
 router.beforeEach((to) => {

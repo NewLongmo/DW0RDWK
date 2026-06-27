@@ -156,6 +156,6 @@ pre {
 }
 
 .danger {
-  color: #cf1322;
+  color: var(--color-danger);
 }
 </style>
